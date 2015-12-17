@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class patt : MonoBehaviour {
+public class ClickEffect : MonoBehaviour {
 	private ParticleSystem pat;
 	private Vector2 start;
 	private Vector2 end;
@@ -13,8 +13,6 @@ public class patt : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		float distance = 3;
-
 		if (Input.GetMouseButtonDown(0)) {
 			start = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			transform.position = start;

@@ -37,13 +37,6 @@ public class RacketController : MonoBehaviour {
 
 			nextPoint.x = basePoint.x - Input.mousePosition.x;
 			nextPoint.y = basePoint.y - Input.mousePosition.y;
-			// Debug.Log("nextPoint.y");
-			// Debug.Log(nextPoint.y);
-			float mousePointY = Input.mousePosition.y;
-			float mousePointX = Input.mousePosition.x;
-
-			float rad = Mathf.Atan2(mousePointY - basePoint.y, mousePointX - basePoint.x);
-			Debug.Log(rad*Mathf.Rad2Deg);
 
 			basePoint.x = Input.mousePosition.x;
 			basePoint.y = Input.mousePosition.y;

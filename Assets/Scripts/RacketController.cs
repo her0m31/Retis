@@ -32,7 +32,7 @@ public class RacketController : MonoBehaviour {
 			end = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			transform.position = Vector2.MoveTowards(transform.position,
 			new Vector2(transform.position.x+(start.x - end.x)/-30, transform.position.y),
-			speed * Time.deltaTime);
+			speed);
 
 
 			nextPoint.x = basePoint.x - Input.mousePosition.x;

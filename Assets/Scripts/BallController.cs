@@ -3,19 +3,16 @@ using System.Collections;
 
 public class BallController : MonoBehaviour {
 	private float speed = 5.0f;
-	private float addSpeed = 1.0f;
+	// private float addSpeed = 1.0f;
 	private Rigidbody2D ball;
+	// 移動ベクトル
 	private Vector2 vectorV;
 
 	// Use this for initialization
 	void Start () {
 		ball = GetComponent<Rigidbody2D>();
-		vectorV = new Vector2(-1.0f, -1.0f)*speed;
+		vectorV = new Vector2(-0.5f, -1.0f)*speed;
 		ball.velocity = vectorV;
-	}
-
-	void Update() {
-
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {

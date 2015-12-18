@@ -2,8 +2,6 @@ using UnityEngine;
 using System.Collections;
 
 public class RacketController : MonoBehaviour {
-	public Transform target;
-
 	private Vector2 basePoint = new Vector2(0.0f, 0.0f);
 	private Vector2 nextPoint = new Vector2(0.0f, 0.0f);
 
@@ -12,9 +10,7 @@ public class RacketController : MonoBehaviour {
 	private Vector2 end;
 
 	void Awake() {
-		if(target == null) {
-			target = transform;
-		}
+
 	}
 
 	void Update() {
@@ -30,6 +26,7 @@ public class RacketController : MonoBehaviour {
 
 		if(Input.GetMouseButton(0)) {
 			end = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
 			transform.position = Vector2.MoveTowards(transform.position,
 			new Vector2(transform.position.x+(start.x - end.x)/-30, transform.position.y),
 			speed);
@@ -43,7 +40,7 @@ public class RacketController : MonoBehaviour {
 
 			Vector3 aular = new Vector3(0.0f, 0.0f, nextPoint.y);
 
-			target.Rotate(aular, Space.World);
+			transform.Rotate(aular, Space.World);
 		}
 	}
 }

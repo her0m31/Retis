@@ -5,7 +5,7 @@ public class WallController : MonoBehaviour {
 	private Vector2 basePoint = new Vector2(0.0f, 0.0f);
 	private Vector2 nextPoint = new Vector2(0.0f, 0.0f);
 
-	private float speed = 100.0f;
+	private float speed = 1.0f;
 	private Vector2 start;
 	private Vector2 end;
 
@@ -23,12 +23,11 @@ public class WallController : MonoBehaviour {
 			end = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
 			transform.position = Vector2.MoveTowards(transform.position,
-			new Vector2(transform.position.x, transform.position.y+(start.y - end.y)/-30.0f),
+			new Vector2(transform.position.x, transform.position.y + (start.y - end.y) / -30.0f),
 			speed);
 
 			nextPoint.x = basePoint.x - Input.mousePosition.x;
 			nextPoint.y = basePoint.y - Input.mousePosition.y;
-
 			basePoint.x = Input.mousePosition.x;
 			basePoint.y = Input.mousePosition.y;
 

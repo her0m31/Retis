@@ -6,10 +6,6 @@ public class PuniCon : MonoBehaviour {
 	private Vector2 start;
 	private Vector2 end;
 
-	// Use this for initialization
-	void Start () {
-	}
-
 	void Update() {
 		if (Input.GetMouseButtonDown(0)) {
 			start = Camera.main.ScreenToWorldPoint(Input.mousePosition);

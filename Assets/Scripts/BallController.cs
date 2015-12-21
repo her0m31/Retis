@@ -8,6 +8,11 @@ public class BallController : MonoBehaviour {
 	// 移動ベクトル
 	private Vector2 vectorV;
 
+	[SerializeField]
+	private GameObject outEffect;
+	[SerializeField]
+	private GameObject hitEffect;
+
 	void OnChangeGameState(GameManager.GameState state) {
 		switch(state) {
 			case GameManager.GameState.Title:
@@ -53,7 +58,12 @@ public class BallController : MonoBehaviour {
 		vectorV = ball.velocity ;
 
 		if(coll.gameObject.CompareTag("OutOfArea") && GameManager.State.Value == GameManager.GameState.Playing) {
+			GameObject.Instantiate(outEffect, coll.contacts[0].point, Quaternion.identity);
 			GameManager.State.Value = GameManager.GameState.GameOver;
+			Destroy(gameObject);
+		}
+		else {
+			GameObject.Instantiate(hitEffect, coll.contacts[0].point, Quaternion.identity);			
 		}
 	}
 }

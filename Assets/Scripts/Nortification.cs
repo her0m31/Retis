@@ -3,8 +3,12 @@ using UnityEngine.Events;
 using System.Collections;
 using System;
 
+[System.Serializable]
 public class Nortification<T> : UnityEvent<T> {
 	private T data;
+
+	public Nortification() {
+  }
 
   public Nortification(T t) {
     Value = t;

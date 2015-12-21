@@ -8,8 +8,24 @@ public class BallController : MonoBehaviour {
 	// 移動ベクトル
 	private Vector2 vectorV;
 
-	// Use this for initialization
+	void OnChangeGameState(GameManager.GameState state) {
+		switch(state) {
+			case GameManager.GameState.Title:
+				enabled = false;
+				break;
+			case GameManager.GameState.GameOver:
+				enabled = false;
+				break;
+			case GameManager.GameState.Playing:
+				enabled = true;
+				break;
+		}
+	}
+
 	void Start() {
+		OnChangeGameState(GameManager.State.Value);
+		GameManager.State.AddListener(OnChangeGameState);
+
 		ball = GetComponent<Rigidbody2D>();
 		vectorV = new Vector2(-0.5f, -1.0f)*speed;
 		ball.velocity = vectorV;
@@ -35,5 +51,9 @@ public class BallController : MonoBehaviour {
 		// }
 		// 反射ベクトルを次の衝突時の入射ベクトルとして保持
 		vectorV = ball.velocity ;
+
+		if(coll.gameObject.CompareTag("OutOfArea") && GameManager.State.Value == GameManager.GameState.Playing) {
+			GameManager.State.Value = GameManager.GameState.GameOver;
+		}
 	}
 }

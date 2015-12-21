@@ -3,11 +3,11 @@ using System.Collections;
 
 public class GameManager : Singleton<GameManager> {
 	private Nortification<int> score;
-	private Nortification<GameState> state;
+	private Nortification<GameState> state = new Nortification<GameState>(GameState.Title);
 
 	public enum GameState {
 		Title,
-		playing,
+		Playing,
 		GameOver,
 		Restart
 	}
@@ -31,7 +31,7 @@ public class GameManager : Singleton<GameManager> {
 
 	void Awake() {
 		score = new Nortification<int>(0);
-		state = new Nortification<GameState>(GameState.Title);
+		// state = new Nortification<GameState>(GameState.Title);
 	}
 
 	// Use this for initialization

@@ -39,7 +39,7 @@ public class BallController : MonoBehaviour {
 		// vectorV => 入射ベクトル
 		physicsBall.velocity = Vector2.Reflect(inDirection, inNormal);
 		// 反射ベクトルを次の入射ベクトルとして保持
-		inDirection = physicsBall.velocity ;
+		inDirection = physicsBall.velocity;
 		// 衝突エフェクト発生
 		EffectActivation(coll);
 	}

@@ -7,9 +7,6 @@ using System;
 public class Nortification<T> : UnityEvent<T> {
 	private T data;
 
-	public Nortification() {
-  }
-
   public Nortification(T t) {
     Value = t;
   }

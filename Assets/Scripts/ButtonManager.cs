@@ -34,14 +34,14 @@ public class ButtonManager : UIBehaviour {
 		}
 	}
 
-	// Use this for initialization
-	protected override void Awake() {
-		base.Awake();
-
+	protected override void Start() {
 		OnChangeGameState(GameManager.State.Value);
 		GameManager.State.AddListener(OnChangeGameState);
-
 		GetComponent<Button>().onClick.AddListener(OnClick);
+	}
+
+	protected override void Awake() {
+		base.Awake();
 	}
 
 	protected override void OnDestroy() {

@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class GameManager : Singleton<GameManager> {
+public class GameManager : SingletonMonoBehaviour<GameManager> {
 	private Nortification<int> score;
-	private Nortification<GameState> state = new Nortification<GameState>(GameState.Title);
+	private Nortification<GameState> state;
 
 	public enum GameState {
 		Title,
@@ -26,15 +27,19 @@ public class GameManager : Singleton<GameManager> {
 
 	IEnumerator Restart() {
 		yield return new WaitForSeconds(0.3f);
-		Application.LoadLevel(Application.loadedLevel);
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
 	void Awake() {
+		if(this != Instance) {
+			Destroy(this);
+			return;
+		}
+
 		score = new Nortification<int>(0);
-		// state = new Nortification<GameState>(GameState.Title);
+		state = new Nortification<GameState>(GameState.Title);
 	}
 
-	// Use this for initialization
 	void Start () {
 		State.AddListener((state) => {
 			if(state == GameState.Restart) {

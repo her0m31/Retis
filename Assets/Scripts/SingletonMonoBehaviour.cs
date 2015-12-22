@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Singleton<T> : MonoBehaviour where T : MonoBehaviour {
+public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour {
   protected static T instance;
 
   public static T Instance {
@@ -9,7 +9,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour {
         instance = (T)FindObjectOfType(typeof(T));
 
         if(instance == null) {
-          Debug.LogError("An instance of "+ typeof(T) +" is needed in the scene, but there is none.");
+          Debug.LogWarning("An instance of "+ typeof(T) +" is needed in the scene.");
         }
       }
 

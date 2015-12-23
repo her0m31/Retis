@@ -22,26 +22,41 @@ public class BallController : MonoBehaviour {
 		}
 	}
 
-	void EffectActivation(Collision2D coll) {
-		if(coll.gameObject.CompareTag("OutOfArea") && GameManager.State.Value == GameManager.GameState.Playing) {
-			GameObject.Instantiate(outEffect, coll.contacts[0].point, Quaternion.identity);
-			GameManager.State.Value = GameManager.GameState.GameOver;
-			Destroy(gameObject);
+	void EffectActivation(Vector3 position, bool isHit) {
+		if(isHit) {
+			GameObject.Instantiate(hitEffect, position, Quaternion.identity);
 		}
 		else {
-			GameObject.Instantiate(hitEffect, coll.contacts[0].point, Quaternion.identity);
+			GameObject.Instantiate(outEffect, position, Quaternion.identity);
+		}
+	}
+
+	void Update() {
+		Vector2 zero = new Vector2(0.0f, 0.0f);
+		if(physicsBall.velocity == zero) {
+			EffectActivation(transform.position, false);
+			GameManager.State.Value = GameManager.GameState.GameOver;
+			Destroy(gameObject);
 		}
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
+		// 衝突エフェクト発生
+		if(coll.gameObject.CompareTag("OutOfArea") && GameManager.State.Value == GameManager.GameState.Playing) {
+			EffectActivation(coll.contacts[0].point, false);
+			GameManager.State.Value = GameManager.GameState.GameOver;
+			Destroy(gameObject);
+		}
+		else {
+			EffectActivation(coll.contacts[0].point, true);
+		}
+
 		// 正規化された法線ベクトルを取得
 		Vector2 inNormal = coll.contacts[0].normal;
 		// vectorV => 入射ベクトル
 		physicsBall.velocity = Vector2.Reflect(inDirection, inNormal);
 		// 反射ベクトルを次の入射ベクトルとして保持
 		inDirection = physicsBall.velocity;
-		// 衝突エフェクト発生
-		EffectActivation(coll);
 	}
 
 	void Awake() {

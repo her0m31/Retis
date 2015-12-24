@@ -65,7 +65,7 @@ public class BallController : MonoBehaviour {
 
 		physicsBall = gameObject.GetComponent<Rigidbody2D>();
 		physicsBall.velocity = new Vector2(-0.5f, -1.0f)*speed;
-		inDirection   = physicsBall.velocity;
+		inDirection = physicsBall.velocity;
 	}
 
 	void Start() {

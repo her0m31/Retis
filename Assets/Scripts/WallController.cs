@@ -6,7 +6,6 @@ public class WallController : MonoBehaviour {
 	private Vector2 worldPointMin;
 	private Vector2 clickStartPoint;
 	private Vector2 clickEndPoint;
-	private float speed = 1.0f;
 
 	void Update() {
 		if(Input.GetMouseButtonDown(0)) {

@@ -2,38 +2,31 @@ using UnityEngine;
 using System.Collections;
 
 public class WallController : MonoBehaviour {
-	private Vector2 basePoint = new Vector2(0.0f, 0.0f);
-	private Vector2 nextPoint = new Vector2(0.0f, 0.0f);
-
+	private Vector2 worldPointMax;
+	private Vector2 worldPointMin;
+	private Vector2 clickStartPoint;
+	private Vector2 clickEndPoint;
 	private float speed = 1.0f;
-	private Vector2 start;
-	private Vector2 end;
 
 	void Update() {
 		if(Input.GetMouseButtonDown(0)) {
-			start = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-			nextPoint.x = 0.0f;
-			nextPoint.y = 0.0f;
-			basePoint.x = Input.mousePosition.x;
-			basePoint.y = Input.mousePosition.y;
+			clickStartPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		}
-
 		if(Input.GetMouseButton(0)) {
-			end = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			clickEndPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-			transform.position = Vector2.MoveTowards(transform.position,
-			new Vector2(transform.position.x, transform.position.y + (start.y - end.y) / -30.0f),
-			speed);
+			Vector2 target = new Vector2(transform.position.x,
+			transform.position.y + (clickStartPoint.y - clickEndPoint.y) / -30.0f);
 
-			nextPoint.x = basePoint.x - Input.mousePosition.x;
-			nextPoint.y = basePoint.y - Input.mousePosition.y;
-			basePoint.x = Input.mousePosition.x;
-			basePoint.y = Input.mousePosition.y;
+			target.x = Mathf.Clamp(target.x, worldPointMin.x, worldPointMax.x);
+			target.y = Mathf.Clamp(target.y, worldPointMin.y, worldPointMax.y);
 
-			// Vector3 aular = new Vector3(0.0f, 0.0f, nextPoint.y);
-			//
-			// transform.Rotate(aular, Space.World);
+			transform.position = target;
 		}
+	}
+
+	void Awake() {
+		worldPointMax = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
+		worldPointMin = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
 	}
 }

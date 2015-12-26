@@ -30,26 +30,27 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
-	void Awake() {
-		if(this != Instance) {
-			Destroy(this);
-			return;
+	void OnChangeGameState(GameManager.GameState state) {
+		if(state == GameState.Restart) {
+			StartCoroutine(Restart());
 		}
-
-		score = new Nortification<int>(0);
-		state = new Nortification<GameState>(GameState.Title);
-	}
-
-	void Start () {
-		State.AddListener((state) => {
-			if(state == GameState.Restart) {
-				StartCoroutine(Restart());
-			}
-		});
 	}
 
 	void OnDestroy() {
 		Score.DisposeOf();
 		State.DisposeOf();
+	}
+
+	void Start () {
+		State.AddListener(OnChangeGameState);
+	}
+
+	void Awake() {
+		if(this != Instance) {
+			Destroy(this);
+			return;
+		}
+		score = new Nortification<int>(0);
+		state = new Nortification<GameState>(GameState.Title);
 	}
 }

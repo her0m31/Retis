@@ -36,21 +36,20 @@ public class ButtonManager : UIBehaviour {
 
 	protected override void OnDestroy() {
 		base.OnDestroy();
-
 		if(GameManager.Instance != null) {
 			GameManager.State.RemoveListener(OnChangeGameState);
 		}
-
 		GetComponent<Button>().onClick.RemoveListener(OnClick);
 	}
-	
+
 	protected override void Start() {
+		base.Start();
 		OnChangeGameState(GameManager.State.Value);
 		GameManager.State.AddListener(OnChangeGameState);
-		GetComponent<Button>().onClick.AddListener(OnClick);
 	}
 
 	protected override void Awake() {
 		base.Awake();
+		GetComponent<Button>().onClick.AddListener(OnClick);
 	}
 }

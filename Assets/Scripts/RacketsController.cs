@@ -18,7 +18,7 @@ public class RacketsController : MonoBehaviour {
 
 			if(gameObject.name == "Top" || gameObject.name == "Bottom") {
 				targetPoint = new Vector2(transform.position.x
-				+ (clickStartPoint.x - clickEndPoint.x) / -30.0f, transform.position.y);
+				+ (clickStartPoint.x - clickEndPoint.x) / -15.0f, transform.position.y);
 			}
 			else {
 				targetPoint = new Vector2(transform.position.x,

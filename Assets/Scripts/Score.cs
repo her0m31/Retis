@@ -17,17 +17,20 @@ public class Score : UIBehaviour {
 	}
 
 	protected override void OnDestroy() {
+		base.OnDestroy();
 		if(GameManager.Instance != null) {
 			GameManager.Score.RemoveListener(UpdateScoreText);
 		}
 	}
 
 	protected override void Start () {
+		base.Start();
 		UpdateScoreText(GameManager.Score.Value);
 		GameManager.Score.AddListener(UpdateScoreText);
 	}
 
 	protected override void Awake() {
+		base.Awake();
 		scoreText = GetComponent<Text>();
 	}
 }

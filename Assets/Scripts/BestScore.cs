@@ -39,6 +39,7 @@ public class BestScore : UIBehaviour {
 	}
 
 	protected override void OnDestroy() {
+		base.OnDestroy();
 		if(GameManager.Instance != null) {
 			GameManager.State.RemoveListener(OnChangeGameState);
 		}
@@ -49,13 +50,14 @@ public class BestScore : UIBehaviour {
 	}
 
 	protected override void Start () {
+		base.Start();
 		OnChangeGameState(GameManager.State.Value);
 		GameManager.State.AddListener(OnChangeGameState);
 	}
 
 	protected override void Awake() {
+		base.Awake();
 		bestScoreText = GetComponent<Text>();
-
 		bestScore = PlayerPrefs.GetInt(prefsKey, 0);
 		bestScoreText.text = "Best Score\n<" + bestScore.ToString() + ">";
 	}

@@ -28,19 +28,14 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 	void OnChangeGameState(GameManager.GameState state) {
 		switch(state) {
 			case GameManager.GameState.Restart:
-				StartCoroutine(Restart());
+				SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 				break;
 		}
 	}
 
 	void OnDestroy() {
-		Score.DisposeOf();
-		State.DisposeOf();
-	}
-
-	IEnumerator Restart() {
-		yield return new WaitForSeconds(0.3f);
-		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		// Score.DisposeOf();
+		// State.DisposeOf();
 	}
 
 	void Start () {

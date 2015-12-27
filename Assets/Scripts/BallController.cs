@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.EventSystems;
 
-public class BallController : MonoBehaviour {
+public class BallController : MonoBehaviour, IPointerClickHandler {
 	private float speed = 5.0f;
 	private Rigidbody2D physicsBall;
 	private Vector2 inDirection;
@@ -37,6 +38,13 @@ public class BallController : MonoBehaviour {
 			EffectActive(transform.position, false);
 			GameManager.State.Value = GameManager.GameState.GameOver;
 			Destroy(gameObject);
+		}
+	}
+
+	public void OnPointerClick (PointerEventData eventData)
+	{
+		if( eventData.clickCount > 1 ){
+			Debug.Log(eventData.clickCount);
 		}
 	}
 

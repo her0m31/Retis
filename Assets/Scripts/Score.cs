@@ -3,15 +3,12 @@ using System.Collections;
 using UnityEngine.UI;
 using	UnityEngine.EventSystems;
 
-public class ScoreManager : UIBehaviour {
+public class Score : UIBehaviour {
 	private Text scoreText;
 
 	public Text ScoreText {
 		get {
-			if(scoreText == null) {
-				scoreText = GetComponent<Text>();
-			}
-			return scoreText;
+			return scoreText == null ? GetComponent<Text>() : scoreText;
 		}
 	}
 
@@ -19,15 +16,14 @@ public class ScoreManager : UIBehaviour {
 		ScoreText.text = score.ToString();
 	}
 
-	// Use this for initialization
-	protected override void Start () {
-		UpdateScoreText(GameManager.Score.Value);
-		GameManager.Score.AddListener(UpdateScoreText);
-	}
-
 	protected override void OnDestroy() {
 		if(GameManager.Instance != null) {
 			GameManager.Score.RemoveListener(UpdateScoreText);
 		}
+	}
+
+	protected override void Start () {
+		UpdateScoreText(GameManager.Score.Value);
+		GameManager.Score.AddListener(UpdateScoreText);
 	}
 }

@@ -25,20 +25,22 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 		}
 	}
 
-	IEnumerator Restart() {
-		yield return new WaitForSeconds(0.3f);
-		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-	}
-
 	void OnChangeGameState(GameManager.GameState state) {
-		if(state == GameState.Restart) {
-			StartCoroutine(Restart());
+		switch(state) {
+			case GameManager.GameState.Restart:
+				StartCoroutine(Restart());
+				break;
 		}
 	}
 
 	void OnDestroy() {
 		Score.DisposeOf();
 		State.DisposeOf();
+	}
+
+	IEnumerator Restart() {
+		yield return new WaitForSeconds(0.3f);
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
 	void Start () {

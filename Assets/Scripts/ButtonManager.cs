@@ -5,7 +5,7 @@ using System.Collections;
 
 public class ButtonManager : UIBehaviour {
 	[SerializeField]
-	Text buttonText;
+	private Text buttonText;
 
 	void OnChangeGameState(GameManager.GameState state) {
 		switch(state) {
@@ -34,16 +34,6 @@ public class ButtonManager : UIBehaviour {
 		}
 	}
 
-	protected override void Start() {
-		OnChangeGameState(GameManager.State.Value);
-		GameManager.State.AddListener(OnChangeGameState);
-		GetComponent<Button>().onClick.AddListener(OnClick);
-	}
-
-	protected override void Awake() {
-		base.Awake();
-	}
-
 	protected override void OnDestroy() {
 		base.OnDestroy();
 
@@ -52,5 +42,15 @@ public class ButtonManager : UIBehaviour {
 		}
 
 		GetComponent<Button>().onClick.RemoveListener(OnClick);
+	}
+	
+	protected override void Start() {
+		OnChangeGameState(GameManager.State.Value);
+		GameManager.State.AddListener(OnChangeGameState);
+		GetComponent<Button>().onClick.AddListener(OnClick);
+	}
+
+	protected override void Awake() {
+		base.Awake();
 	}
 }

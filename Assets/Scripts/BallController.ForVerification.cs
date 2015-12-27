@@ -8,13 +8,6 @@ public class BallControllerFV : MonoBehaviour {
 	// 移動ベクトル
 	private Vector2 vectorV;
 
-	// Use this for initialization
-	void Start () {
-		ball = GetComponent<Rigidbody2D>();
-		vectorV = new Vector2(-0.5f, -1.0f)*speed;
-		ball.velocity = vectorV;
-	}
-
 	void OnCollisionEnter2D(Collision2D coll) {
 		// 法線ベクトルをボールに適用 -> 緑軸の方向へ
 		// Vector2 vel = coll.gameObject.transform.up * speed;
@@ -49,5 +42,11 @@ public class BallControllerFV : MonoBehaviour {
 		// 反射ベクトルを次の衝突時の入射ベクトルとして保持
 		vectorV = ball.velocity ;
 		Debug.Log("vectorV: "+ vectorV);
+	}
+
+	void Start () {
+		ball = GetComponent<Rigidbody2D>();
+		vectorV = new Vector2(-0.5f, -1.0f)*speed;
+		ball.velocity = vectorV;
 	}
 }

@@ -26,4 +26,8 @@ public class Score : UIBehaviour {
 		UpdateScoreText(GameManager.Score.Value);
 		GameManager.Score.AddListener(UpdateScoreText);
 	}
+
+	protected override void Awake() {
+		scoreText = GetComponent<Text>();
+	}
 }

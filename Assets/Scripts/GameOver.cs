@@ -30,9 +30,14 @@ public class GameOver : UIBehaviour {
 		}
 	}
 
-	protected override void Start () {
+	protected override void Start() {
 		base.Start();
 		OnChangeGameState(GameManager.State.Value);
 		GameManager.State.AddListener(OnChangeGameState);
+	}
+
+	protected override void Awake() {
+		base.Awake();
+		gameOverText = GetComponent<Text>();
 	}
 }

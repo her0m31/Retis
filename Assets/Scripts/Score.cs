@@ -25,7 +25,7 @@ public class Score : UIBehaviour {
 
 	protected override void Start () {
 		base.Start();
-		UpdateScoreText(GameManager.Score.Value);
+		UpdateScoreText(GameManager.CurrentScore);
 		GameManager.Score.AddListener(UpdateScoreText);
 	}
 

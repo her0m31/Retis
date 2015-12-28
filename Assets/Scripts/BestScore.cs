@@ -1,4 +1,3 @@
-using PlayerPrefs = PreviewLabs.PlayerPrefs;
 using UnityEngine;
 using UnityEngine.UI;
 using	UnityEngine.EventSystems;
@@ -43,10 +42,6 @@ public class BestScore : UIBehaviour {
 		if(GameManager.Instance != null) {
 			GameManager.State.RemoveListener(OnChangeGameState);
 		}
-	}
-
-	public void OnApplicationQuit() {
-		PlayerPrefs.Flush();
 	}
 
 	protected override void Start () {

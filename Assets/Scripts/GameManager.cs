@@ -4,7 +4,18 @@ using System.Collections;
 
 public class GameManager : SingletonMonoBehaviour<GameManager> {
 	private Nortification<int> score;
+	public static Nortification<int> Score {
+		get {
+			return Instance.score;
+		}
+	}
+
 	private Nortification<GameState> state;
+	public static Nortification<GameState> State {
+		get {
+			return Instance.state;
+		}
+	}
 
 	public enum GameState {
 		Title,
@@ -13,16 +24,26 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 		Restart
 	}
 
-	public static Nortification<int> Score {
+	public static int CurrentScore {
 		get {
-			return Instance.score;
+			return Score.Value;
+		}
+		set {
+			Score.Value = value;
 		}
 	}
 
-	public static Nortification<GameState> State {
+	public static GameState CurrentState {
 		get {
-			return Instance.state;
+			return State.Value;
 		}
+		set {
+			State.Value = value;
+		}
+	}
+
+	public static bool IsPlaying() {
+		return CurrentState == GameManager.GameState.Playing ? true : false;
 	}
 
 	void OnChangeGameState(GameManager.GameState state) {
@@ -34,8 +55,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 	}
 
 	void OnDestroy() {
-		// Score.DisposeOf();
-		// State.DisposeOf();
+		Score.DisposeOf();
+		State.DisposeOf();
 	}
 
 	void Start () {

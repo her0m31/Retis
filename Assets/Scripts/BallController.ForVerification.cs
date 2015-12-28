@@ -46,7 +46,7 @@ public class BallControllerFV : MonoBehaviour {
 
 	void Start () {
 		ball = GetComponent<Rigidbody2D>();
-		vectorV = new Vector2(-0.5f, -1.0f)*speed;
+		vectorV = new Vector2(-1.0f, -1.0f)*speed;
 		ball.velocity = vectorV;
 	}
 }

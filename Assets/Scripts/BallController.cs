@@ -1,26 +1,38 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
-public class BallController : MonoBehaviour, IPointerClickHandler {
-	private float speed = 5.0f;
+public class BallController : MonoBehaviour {
+	private Transform thisTransform;
+	private GameObject thisGameObject;
 	private Rigidbody2D physicsBall;
 	private Vector2 inDirection;
 	private GameObject outEffect;
 	private GameObject hitEffect;
+	private Vector2 worldPointMax;
+	private Vector2 worldPointMin;
 
-	void OnChangeGameState(GameManager.GameState state) {
-		switch(state) {
-			case GameManager.GameState.Title:
-				enabled = false;
-				break;
-			case GameManager.GameState.GameOver:
-				enabled = false;
-				break;
-			case GameManager.GameState.Playing:
-				enabled = true;
-				break;
+	public new Transform transform {
+		get {
+			return thisTransform == null ? thisTransform = base.transform : thisTransform;
 		}
+	}
+
+	public new GameObject gameObject {
+		get {
+			return thisGameObject == null ? thisGameObject = base.gameObject : thisGameObject;
+		}
+	}
+
+	private Vector2 AddFirstForce() {
+		Vector2[] firstForce = new Vector2[] {
+				new Vector2(-1.50f, -1.40f)*2.65f,
+				new Vector2(-1.50f,  1.40f)*2.65f,
+				new Vector2( 1.50f, -1.40f)*2.65f,
+				new Vector2( 1.50f,  1.40f)*2.65f,
+		};
+
+		return firstForce[Random.Range(0, firstForce.Length)];
 	}
 
 	void EffectActive(Vector3 position, bool isHit) {
@@ -32,25 +44,32 @@ public class BallController : MonoBehaviour, IPointerClickHandler {
 		}
 	}
 
-	void Update() {
-		Vector2 zero = new Vector2(0.0f, 0.0f);
-		if(physicsBall.velocity == zero) {
-			EffectActive(transform.position, false);
+	void ChangeStateFromPlaying() {
+		if(GameManager.State.Value == GameManager.GameState.Playing) {
 			GameManager.State.Value = GameManager.GameState.GameOver;
-			Destroy(gameObject);
+		}
+		else {
+			GameManager.State.Value = GameManager.GameState.Restart;
 		}
 	}
 
-	public void OnPointerClick (PointerEventData eventData)
-	{
-		if( eventData.clickCount > 1 ){
-			Debug.Log(eventData.clickCount);
+	void OnChangeGameState(GameManager.GameState state) {
+		switch(state) {
+			case GameManager.GameState.Title:
+				this.enabled = true;
+				break;
+			case GameManager.GameState.GameOver:
+				this.enabled = false;
+				break;
+			case GameManager.GameState.Playing:
+				this.enabled = true;
+				break;
 		}
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
 		// 衝突エフェクト発生
-		if(coll.gameObject.CompareTag("OutOfArea") && GameManager.State.Value == GameManager.GameState.Playing) {
+		if(coll.gameObject.CompareTag("OutOfArea") && GameManager.IsPlaying()) {
 			EffectActive(coll.contacts[0].point, false);
 			GameManager.State.Value = GameManager.GameState.GameOver;
 			Destroy(gameObject);
@@ -67,17 +86,35 @@ public class BallController : MonoBehaviour, IPointerClickHandler {
 		inDirection = physicsBall.velocity;
 	}
 
-	void Awake() {
-		outEffect = GameObject.Find("DeathEffect");
-		hitEffect = GameObject.Find("SuccesEffects");
+	void Update() {
+		if(physicsBall.velocity == Vector2.zero) {
+			EffectActive(transform.position, false);
+			Destroy(gameObject);
+			ChangeStateFromPlaying();
+		}
 
-		physicsBall = gameObject.GetComponent<Rigidbody2D>();
-		physicsBall.velocity = new Vector2(-0.5f, -1.0f)*speed;
-		inDirection = physicsBall.velocity;
+		if(transform.position.x < worldPointMin.x || worldPointMax.x < transform.position.x){
+			if(transform.position.y < worldPointMin.y || worldPointMax.y < transform.position.y){
+				Destroy(gameObject);
+				ChangeStateFromPlaying();
+			}
+		}
 	}
 
 	void Start() {
 		OnChangeGameState(GameManager.State.Value);
 		GameManager.State.AddListener(OnChangeGameState);
+	}
+
+	void Awake() {
+		outEffect = GameObject.Find("DeathEffect");
+		hitEffect = GameObject.Find("SuccesEffects");
+
+		worldPointMax = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
+		worldPointMin = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
+
+		physicsBall = gameObject.GetComponent<Rigidbody2D>();
+		physicsBall.velocity = AddFirstForce();
+		inDirection = physicsBall.velocity;
 	}
 }

@@ -2,11 +2,18 @@ using UnityEngine;
 using System.Collections;
 
 public class RacketsController : MonoBehaviour {
+	private Transform thisTransform;
 	private Vector2 worldPointMax;
 	private Vector2 worldPointMin;
 	private Vector2 clickStartPoint;
 	private Vector2 clickEndPoint;
 	private Vector2 targetPoint;
+
+	public new Transform transform {
+		get {
+			return thisTransform == null ? thisTransform = base.transform : thisTransform;
+		}
+	}
 
 	void Update() {
 		if(Input.GetMouseButtonDown(0)) {
@@ -14,7 +21,6 @@ public class RacketsController : MonoBehaviour {
 		}
 		if(Input.GetMouseButton(0)) {
 			clickEndPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
 
 			if(gameObject.name == "Top" || gameObject.name == "Bottom") {
 				targetPoint = new Vector2(transform.position.x

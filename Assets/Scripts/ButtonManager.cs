@@ -7,6 +7,17 @@ public class ButtonManager : UIBehaviour {
 	[SerializeField]
 	private Text buttonText;
 
+	void OnClick() {
+		switch(GameManager.State.Value) {
+			case GameManager.GameState.Title:
+				GameManager.State.Value = GameManager.GameState.Playing;
+				break;
+			case GameManager.GameState.GameOver:
+				GameManager.State.Value = GameManager.GameState.Restart;
+				break;
+		}
+	}
+
 	void OnChangeGameState(GameManager.GameState state) {
 		switch(state) {
 			case GameManager.GameState.Title:
@@ -19,17 +30,6 @@ public class ButtonManager : UIBehaviour {
 				break;
 			case GameManager.GameState.Playing:
 				gameObject.SetActive(false);
-				break;
-		}
-	}
-
-	void OnClick() {
-		switch(GameManager.State.Value) {
-			case GameManager.GameState.Title:
-				GameManager.State.Value = GameManager.GameState.Playing;
-				break;
-			case GameManager.GameState.GameOver:
-				GameManager.State.Value = GameManager.GameState.Restart;
 				break;
 		}
 	}

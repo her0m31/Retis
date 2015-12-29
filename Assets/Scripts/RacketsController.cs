@@ -22,6 +22,20 @@ public class RacketsController : MonoBehaviour {
 		}
 	}
 
+	void OnChangeGameState(GameManager.GameState state) {
+		switch(state) {
+			case GameManager.GameState.Title:
+				this.enabled = false;
+				break;
+			case GameManager.GameState.GameOver:
+				this.enabled = false;
+				break;
+			case GameManager.GameState.Playing:
+				this.enabled = true;
+				break;
+		}
+	}
+
 	void Update() {
 		if(Input.GetMouseButtonDown(0)) {
 			clickStartPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -42,6 +56,11 @@ public class RacketsController : MonoBehaviour {
 
 			transform.position = targetPoint;
 		}
+	}
+
+	void Start() {
+		OnChangeGameState(GameManager.State.Value);
+		GameManager.State.AddListener(OnChangeGameState);
 	}
 
 	void Awake() {

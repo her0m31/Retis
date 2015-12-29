@@ -22,11 +22,13 @@ public class ButtonManager : UIBehaviour {
 		switch(state) {
 			case GameManager.GameState.Title:
 				gameObject.SetActive(true);
-				buttonText.text = "START";
+				buttonText.text = "-";
+				buttonText.fontSize = 150;
 				break;
 			case GameManager.GameState.GameOver:
 				gameObject.SetActive(true);
-				buttonText.text = "RESTART";
+				buttonText.text = "2";
+				buttonText.fontSize = 100;
 				break;
 			case GameManager.GameState.Playing:
 				gameObject.SetActive(false);

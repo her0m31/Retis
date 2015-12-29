@@ -4,9 +4,16 @@ using	UnityEngine.EventSystems;
 using System.Collections;
 
 public class BestScore : UIBehaviour {
+	private RectTransform thisRectTransform;
 	const string prefsKey = "BEST_SCORE";
 	private Text bestScoreText;
 	private int bestScore;
+
+	public RectTransform rectTransform {
+		get {
+			return thisRectTransform == null ? GetComponent<RectTransform>() : thisRectTransform;
+		}
+	}
 
 	public Text BestScoreText {
 		get {
@@ -18,7 +25,6 @@ public class BestScore : UIBehaviour {
 		if (bestScore < GameManager.Score.Value) {
 			bestScore = GameManager.Score.Value;
 			PlayerPrefs.SetInt(prefsKey, bestScore);
-			bestScoreText.text = "Best Score\n<" + bestScore.ToString() + ">";
 		}
 	}
 
@@ -29,6 +35,8 @@ public class BestScore : UIBehaviour {
 				break;
 			case GameManager.GameState.GameOver:
 				UpdateBestScoreText();
+				bestScoreText.text = "Best\n" + bestScore.ToString();
+				rectTransform.localPosition = new Vector3(rectTransform.localPosition.x -90.0f, rectTransform.localPosition.y, rectTransform.localPosition.z);
 				BestScoreText.enabled = true;
 				break;
 			default:
@@ -54,6 +62,6 @@ public class BestScore : UIBehaviour {
 		base.Awake();
 		bestScoreText = GetComponent<Text>();
 		bestScore = PlayerPrefs.GetInt(prefsKey, 0);
-		bestScoreText.text = "Best Score\n<" + bestScore.ToString() + ">";
+		bestScoreText.text = "BestsScore\n" + bestScore.ToString();
 	}
 }

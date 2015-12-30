@@ -4,20 +4,20 @@ using	UnityEngine.EventSystems;
 using System.Collections;
 
 public class BestScore : UIBehaviour {
-	private RectTransform thisRectTransform;
 	const string prefsKey = "BEST_SCORE";
-	private Text bestScoreText;
+	private RectTransform thisRectTransform;
+	private Text thisText;
 	private int bestScore;
 
 	public RectTransform rectTransform {
 		get {
-			return thisRectTransform == null ? GetComponent<RectTransform>() : thisRectTransform;
+			return thisRectTransform == null ? thisRectTransform = base.GetComponent<RectTransform>() : thisRectTransform;
 		}
 	}
 
-	public Text BestScoreText {
+	public Text text {
 		get {
-			return bestScoreText == null ? GetComponent<Text>() : bestScoreText;
+			return thisText == null ? thisText = base.GetComponent<Text>() : thisText;
 		}
 	}
 
@@ -30,17 +30,9 @@ public class BestScore : UIBehaviour {
 
 	void OnChangeGameState(GameManager.GameState state) {
 		switch(state) {
-			case GameManager.GameState.Title:
-				BestScoreText.enabled = true;
-				break;
 			case GameManager.GameState.GameOver:
 				UpdateBestScoreText();
-				bestScoreText.text = "Best\n" + bestScore.ToString();
-				rectTransform.localPosition = new Vector3(rectTransform.localPosition.x -90.0f, rectTransform.localPosition.y, rectTransform.localPosition.z);
-				BestScoreText.enabled = true;
-				break;
-			default:
-				BestScoreText.enabled = false;
+				text.text = text.text + bestScore.ToString();
 				break;
 		}
 	}
@@ -60,8 +52,7 @@ public class BestScore : UIBehaviour {
 
 	protected override void Awake() {
 		base.Awake();
-		bestScoreText = GetComponent<Text>();
 		bestScore = PlayerPrefs.GetInt(prefsKey, 0);
-		bestScoreText.text = "BestsScore\n" + bestScore.ToString();
+		text.text = text.text + bestScore.ToString();
 	}
 }

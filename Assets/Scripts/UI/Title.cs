@@ -3,22 +3,29 @@ using UnityEngine.UI;
 using	UnityEngine.EventSystems;
 using System.Collections;
 
-public class GameOver : UIBehaviour {
-	private Text gameOverText;
+public class Title : UIBehaviour {
+	private Text thisText;
 
-	public Text GameOverText {
+	public Text text {
 		get {
-			return gameOverText == null ? GetComponent<Text>() : gameOverText;
+			return thisText == null ? thisText = base.GetComponent<Text>() : thisText;
 		}
 	}
 
 	void OnChangeGameState(GameManager.GameState state) {
 		switch(state) {
+			case GameManager.GameState.Title:
+				text.text = "Retis.";
+				text.fontSize = 70;
+				text.enabled  = true;
+				break;
 			case GameManager.GameState.GameOver:
-				GameOverText.enabled = true;
+				text.text = "   Game Over...";
+				text.fontSize = 50;
+				text.enabled  = true;
 				break;
 			default:
-				GameOverText.enabled = false;
+				text.enabled = false;
 				break;
 		}
 	}
@@ -38,6 +45,6 @@ public class GameOver : UIBehaviour {
 
 	protected override void Awake() {
 		base.Awake();
-		gameOverText = GetComponent<Text>();
+		thisText = base.GetComponent<Text>();
 	}
 }

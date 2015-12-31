@@ -8,7 +8,7 @@ public class Score : UIBehaviour {
 
 	public Text text {
 		get {
-			return text == null ? thisText = base.GetComponent<Text>() : thisText;
+			return thisText == null ? thisText = base.GetComponent<Text>() : thisText;
 		}
 	}
 
@@ -16,17 +16,32 @@ public class Score : UIBehaviour {
 		text.text = score.ToString();
 	}
 
+	void OnChangeGameState(GameManager.GameState state) {
+		switch(state) {
+			case GameManager.GameState.Playing:
+				gameObject.SetActive(true);
+				break;
+			default:
+				gameObject.SetActive(false);
+				break;
+		}
+	}
+
 	protected override void OnDestroy() {
 		base.OnDestroy();
 		if(GameManager.Instance != null) {
 			GameManager.Score.RemoveListener(UpdateScoreText);
+			GameManager.State.RemoveListener(OnChangeGameState);
 		}
 	}
 
-	protected override void Start () {
+	protected override void Start() {
 		base.Start();
-		UpdateScoreText(GameManager.CurrentScore);
+		UpdateScoreText(GameManager.Score.Value);
+		OnChangeGameState(GameManager.State.Value);
+
 		GameManager.Score.AddListener(UpdateScoreText);
+		GameManager.State.AddListener(OnChangeGameState);
 	}
 
 	protected override void Awake() {

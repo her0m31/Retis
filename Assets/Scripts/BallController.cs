@@ -69,7 +69,7 @@ public class BallController : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D coll) {
 		// 衝突エフェクト発生
-		if(coll.gameObject.CompareTag("OutOfArea") && GameManager.IsPlaying()) {
+		if(coll.gameObject.CompareTag("OutOfArea") && GameManager.IsPlay()) {
 			EffectActive(coll.contacts[0].point, false);
 			GameManager.State.Value = GameManager.GameState.GameOver;
 			Destroy(gameObject);

@@ -4,13 +4,14 @@ using System.Collections;
 
 public class GameManager : SingletonMonoBehaviour<GameManager> {
 	private Nortification<int> score;
+	private Nortification<GameState> state;
+
 	public static Nortification<int> Score {
 		get {
 			return Instance.score;
 		}
 	}
 
-	private Nortification<GameState> state;
 	public static Nortification<GameState> State {
 		get {
 			return Instance.state;
@@ -24,26 +25,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 		Restart
 	}
 
-	public static int CurrentScore {
-		get {
-			return Score.Value;
-		}
-		set {
-			Score.Value = value;
-		}
-	}
-
-	public static GameState CurrentState {
-		get {
-			return State.Value;
-		}
-		set {
-			State.Value = value;
-		}
-	}
-
-	public static bool IsPlaying() {
-		return CurrentState == GameManager.GameState.Playing ? true : false;
+	public static bool IsPlay() {
+		return GameManager.State.Value == GameManager.GameState.Playing ? true : false;
 	}
 
 	void OnChangeGameState(GameManager.GameState state) {

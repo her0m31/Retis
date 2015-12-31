@@ -5,15 +5,9 @@ using System.Collections;
 
 public class BestScore : UIBehaviour {
 	const string prefsKey = "BEST_SCORE";
-	private RectTransform thisRectTransform;
 	private Text thisText;
+	private string baseText;
 	private int bestScore;
-
-	public RectTransform rectTransform {
-		get {
-			return thisRectTransform == null ? thisRectTransform = base.GetComponent<RectTransform>() : thisRectTransform;
-		}
-	}
 
 	public Text text {
 		get {
@@ -30,9 +24,13 @@ public class BestScore : UIBehaviour {
 
 	void OnChangeGameState(GameManager.GameState state) {
 		switch(state) {
-			case GameManager.GameState.GameOver:
+			case GameManager.GameState.Title:
+				gameObject.SetActive(true);
 				UpdateBestScoreText();
-				text.text = text.text + bestScore.ToString();
+				text.text = baseText + bestScore.ToString();
+				break;
+			default:
+				gameObject.SetActive(false);
 				break;
 		}
 	}
@@ -53,6 +51,7 @@ public class BestScore : UIBehaviour {
 	protected override void Awake() {
 		base.Awake();
 		bestScore = PlayerPrefs.GetInt(prefsKey, 0);
-		text.text = text.text + bestScore.ToString();
+		baseText  = text.text;
+		text.text = baseText + bestScore.ToString();
 	}
 }

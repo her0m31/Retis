@@ -23,10 +23,13 @@ public class RacketsController : MonoBehaviour {
 
 	void OnChangeGameState(GameManager.GameState state) {
 		switch(state) {
+			case GameManager.GameState.Title:
+			this.enabled = true;
+			break;
 			case GameManager.GameState.Playing:
 			this.enabled = true;
 			break;
-			case GameManager.GameState.Title:
+			case GameManager.GameState.Ready:
 			this.enabled = true;
 			break;
 			default:

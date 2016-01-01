@@ -9,7 +9,7 @@ public class ButtonManager : UIBehaviour {
 	void OnClick() {
 		switch(GameManager.State.Value) {
 			case GameManager.GameState.Title:
-				GameManager.State.Value = GameManager.GameState.Playing;
+				GameManager.State.Value = GameManager.GameState.Ready;
 				break;
 			case GameManager.GameState.GameOver:
 				GameManager.State.Value = GameManager.GameState.Restart;
@@ -53,7 +53,7 @@ public class ButtonManager : UIBehaviour {
 
 	protected override void Awake() {
 		base.Awake();
-		
+
 		GetComponent<Button>().onClick.AddListener(OnClick);
 	}
 }

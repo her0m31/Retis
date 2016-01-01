@@ -91,12 +91,15 @@ public class BallController : MonoBehaviour {
 	}
 
 	void Update() {
+		// ボールが完全に静止した時にリスタートする
 		if(physicsBall.velocity == Vector2.zero) {
 			EffectActive(transform.position, false);
 			Destroy(gameObject);
 			ChangeStateFromPlaying();
 		}
 
+		// ボールが画面外に出てしまった時にゲームオーバーとして終了させる
+		// 現状だとボールスピードが変化しないのできにしなくて良い。
 		if(transform.position.x < worldPointMin.x || worldPointMax.x < transform.position.x){
 			if(transform.position.y < worldPointMin.y || worldPointMax.y < transform.position.y){
 				Destroy(gameObject);

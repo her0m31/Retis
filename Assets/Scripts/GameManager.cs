@@ -15,7 +15,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 	}
 
 	public enum GameState {
-		Title, Playing, GameOver, Restart
+		Title, Ready, Playing, GameOver, Restart
 	}
 
 	public static bool IsPlay() {

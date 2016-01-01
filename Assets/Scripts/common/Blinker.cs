@@ -3,28 +3,29 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class Blinker : MonoBehaviour {
-	private GameObject thisGameObject;
 	private float addAlpha;
 	private float addFontSize;
 	private float prevFontSize;
 
-	public new GameObject gameObject {
-		get {
-			return thisGameObject == null ? thisGameObject = base.gameObject : thisGameObject;
-		}
+	private Text thisText;
+	public Text text {
+		get {return thisText == null ? thisText = base.gameObject.GetComponent<Text>() : thisText;}
 	}
 
 	void Update() {
-		float currentAlpha = gameObject.GetComponent<Text>().color.a;
+		// テキストの点滅処理
+		Color color = text.color;
+		float currentAlpha = color.a;
 		// Alphaが0 または 1になったら増減値を反転
 		if(1.0f < currentAlpha || currentAlpha < 0.1f) {
 			addAlpha *= -1;
 		}
 		// Alpha値を増減させてセット
-		gameObject.GetComponent<Text>().color = new Color(243.0f/255.0f, 156.0f/255.0f, 18.0f/255.0f, (currentAlpha + addAlpha));
+		text.color = new Color(color.r, color.g, color.b, (currentAlpha + addAlpha));
 
-		int currentFontSize = gameObject.GetComponent<Text>().fontSize;
-		switch(gameObject.GetComponent<Text>().text) {
+		// テキストの拡大縮小処理
+		int currentFontSize = text.fontSize;
+		switch(text.text) {
 			case "-":
 				if(165 < currentFontSize || currentFontSize < 135) {
 					addFontSize *= -1;
@@ -42,7 +43,7 @@ public class Blinker : MonoBehaviour {
 				break;
 		}
 
-		gameObject.GetComponent<Text>().fontSize = (int)prevFontSize;
+		text.fontSize = (int)prevFontSize;
 	}
 
 	void Awake() {

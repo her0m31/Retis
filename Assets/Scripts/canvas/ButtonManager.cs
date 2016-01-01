@@ -4,8 +4,7 @@ using	UnityEngine.EventSystems;
 using System.Collections;
 
 public class ButtonManager : UIBehaviour {
-	[SerializeField]
-	private Text buttonText;
+	[SerializeField] private Text buttonText;
 
 	void OnClick() {
 		switch(GameManager.State.Value) {
@@ -30,7 +29,7 @@ public class ButtonManager : UIBehaviour {
 				buttonText.text = "2";
 				buttonText.fontSize = 100;
 				break;
-			case GameManager.GameState.Playing:
+			default:
 				gameObject.SetActive(false);
 				break;
 		}
@@ -38,6 +37,7 @@ public class ButtonManager : UIBehaviour {
 
 	protected override void OnDestroy() {
 		base.OnDestroy();
+
 		if(GameManager.Instance != null) {
 			GameManager.State.RemoveListener(OnChangeGameState);
 		}
@@ -46,12 +46,14 @@ public class ButtonManager : UIBehaviour {
 
 	protected override void Start() {
 		base.Start();
+
 		OnChangeGameState(GameManager.State.Value);
 		GameManager.State.AddListener(OnChangeGameState);
 	}
 
 	protected override void Awake() {
 		base.Awake();
+		
 		GetComponent<Button>().onClick.AddListener(OnClick);
 	}
 }

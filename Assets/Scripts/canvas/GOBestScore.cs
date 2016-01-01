@@ -5,14 +5,12 @@ using System.Collections;
 
 public class GOBestScore : UIBehaviour {
 	const string prefsKey = "BEST_SCORE";
-	private Text thisText;
 	private string baseText;
 	private int bestScore;
 
+	private Text thisText;
 	public Text text {
-		get {
-			return thisText == null ? thisText = base.GetComponent<Text>() : thisText;
-		}
+		get {return thisText == null ? thisText = base.GetComponent<Text>() : thisText;}
 	}
 
 	private void UpdateBestScoreText() {

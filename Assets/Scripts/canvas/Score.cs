@@ -5,11 +5,8 @@ using	UnityEngine.EventSystems;
 
 public class Score : UIBehaviour {
 	private Text thisText;
-
 	public Text text {
-		get {
-			return thisText == null ? thisText = base.GetComponent<Text>() : thisText;
-		}
+		get {return thisText == null ? thisText = base.GetComponent<Text>() : thisText;}
 	}
 
 	void UpdateScoreText(int score) {
@@ -42,10 +39,5 @@ public class Score : UIBehaviour {
 
 		GameManager.Score.AddListener(UpdateScoreText);
 		GameManager.State.AddListener(OnChangeGameState);
-	}
-
-	protected override void Awake() {
-		base.Awake();
-		thisText = base.GetComponent<Text>();
 	}
 }

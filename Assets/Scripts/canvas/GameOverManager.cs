@@ -6,11 +6,11 @@ public class GameOverManager : MonoBehaviour {
 	void OnChangeGameState(GameManager.GameState state) {
 		switch(state) {
 			case GameManager.GameState.GameOver:
-				gameObject.SetActive(true);
-				break;
+			gameObject.SetActive(true);
+			break;
 			default:
-				gameObject.SetActive(false);
-				break;
+			gameObject.SetActive(false);
+			break;
 		}
 	}
 

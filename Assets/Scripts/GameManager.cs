@@ -7,26 +7,19 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 	private Nortification<GameState> state;
 
 	public static Nortification<int> Score {
-		get {
-			return Instance.score;
-		}
+		get {return Instance.score;}
 	}
 
 	public static Nortification<GameState> State {
-		get {
-			return Instance.state;
-		}
+		get {return Instance.state;}
 	}
 
 	public enum GameState {
-		Title,
-		Playing,
-		GameOver,
-		Restart
+		Title, Playing, GameOver, Restart
 	}
 
 	public static bool IsPlay() {
-		return GameManager.State.Value == GameManager.GameState.Playing ? true : false;
+		return State.Value == GameState.Playing ? true : false;
 	}
 
 	void OnChangeGameState(GameManager.GameState state) {

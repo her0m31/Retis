@@ -10,9 +10,7 @@ public class BestScore : UIBehaviour {
 	private int bestScore;
 
 	public Text text {
-		get {
-			return thisText == null ? thisText = base.GetComponent<Text>() : thisText;
-		}
+		get {return thisText == null ? thisText = base.GetComponent<Text>() : thisText;}
 	}
 
 	private void UpdateBestScoreText() {

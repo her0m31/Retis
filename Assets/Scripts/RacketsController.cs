@@ -2,69 +2,73 @@ using UnityEngine;
 using System.Collections;
 
 public class RacketsController : MonoBehaviour {
-	private Transform thisTransform;
-	private GameObject thisGameObject;
-	private Vector2 worldPointMax;
-	private Vector2 worldPointMin;
 	private Vector2 clickStartPoint;
 	private Vector2 clickEndPoint;
-	private Vector2 targetPoint;
+
+	private Transform thisTransform;
+	private GameObject thisGameObject;
+	private Camera thisCamera;
 
 	public new Transform transform {
-		get {
-			return thisTransform == null ? thisTransform = base.transform : thisTransform;
-		}
+		get {return thisTransform == null ? thisTransform = base.transform : thisTransform;}
 	}
 
 	public new GameObject gameObject {
-		get {
-			return thisGameObject == null ? thisGameObject = base.gameObject : thisGameObject;
-		}
+		get {return thisGameObject == null ? thisGameObject = base.gameObject : thisGameObject;}
+	}
+
+	public new Camera camera {
+		get {return thisCamera == null ? thisCamera = Camera.main : thisCamera;}
 	}
 
 	void OnChangeGameState(GameManager.GameState state) {
 		switch(state) {
-			case GameManager.GameState.Title:
-				this.enabled = false;
-				break;
-			case GameManager.GameState.GameOver:
-				this.enabled = false;
-				break;
 			case GameManager.GameState.Playing:
-				this.enabled = true;
-				break;
+			this.enabled = true;
+			break;
+			default:
+			this.enabled = false;
+			break;
+		}
+	}
+
+	void OnDestroy() {
+		if(GameManager.Instance != null) {
+			GameManager.State.RemoveListener(OnChangeGameState);
 		}
 	}
 
 	void Update() {
+		// 画面をタッチ(右クリック)した時
 		if(Input.GetMouseButtonDown(0)) {
-			clickStartPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			// タッチ(クリック)開始の座標を取得
+			clickStartPoint = camera.ScreenToWorldPoint(Input.mousePosition);
 		}
+		// 画面をタッチ(右クリック)して、ドラッグしている状態
 		if(Input.GetMouseButton(0)) {
-			clickEndPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			// タッチ(クリック)のドラッグの終了座標
+			clickEndPoint = camera.ScreenToWorldPoint(Input.mousePosition);
+			// 画面の右上の座標と左下の座標を取得
+			Vector2 worldPointMax = camera.ViewportToWorldPoint(Vector2.one);
+			Vector2 worldPointMin = camera.ViewportToWorldPoint(Vector2.zero);
 
+			// オブジェクトの座標に、(クリックの終点から開始点を引いた値 / 20.0f)をプラス。
+			// 20.0fは、ラケットの移動速度を調整するため.値を大きくすると遅く。小さくすると早くなる。
 			if(gameObject.name == "TBRackets") {
-				targetPoint = new Vector2(transform.position.x + (clickStartPoint.x - clickEndPoint.x) / -20.0f,
-					transform.position.y);
-				targetPoint.x = Mathf.Clamp(targetPoint.x, worldPointMin.x, worldPointMax.x);
+				float x = transform.position.x + (clickEndPoint.x - clickStartPoint.x) / 20.0f;
+				x = Mathf.Clamp(x, worldPointMin.x, worldPointMax.x);
+				transform.position = new Vector2(x, transform.position.y);
 			}
 			else {
-				targetPoint = new Vector2(transform.position.x,
-					transform.position.y + (clickEndPoint.y - clickStartPoint.y) / 20.0f);
-				targetPoint.y = Mathf.Clamp(targetPoint.y, worldPointMin.y, worldPointMax.y);
+				float y = transform.position.y + (clickEndPoint.y - clickStartPoint.y) / 20.0f;
+				y = Mathf.Clamp(y, worldPointMin.y, worldPointMax.y);
+				transform.position = new Vector2(transform.position.x, y);
 			}
-
-			transform.position = targetPoint;
 		}
 	}
 
 	void Start() {
 		OnChangeGameState(GameManager.State.Value);
 		GameManager.State.AddListener(OnChangeGameState);
-	}
-
-	void Awake() {
-		worldPointMax = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
-		worldPointMin = Camera.main.ViewportToWorldPoint(new Vector2(0, 0));
 	}
 }

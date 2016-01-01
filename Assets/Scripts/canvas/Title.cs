@@ -5,11 +5,8 @@ using System.Collections;
 
 public class Title : UIBehaviour {
 	private Text thisText;
-
 	public Text text {
-		get {
-			return thisText == null ? thisText = base.GetComponent<Text>() : thisText;
-		}
+		get {return thisText == null ? thisText = base.GetComponent<Text>() : thisText;}
 	}
 
 	void OnChangeGameState(GameManager.GameState state) {
@@ -32,6 +29,7 @@ public class Title : UIBehaviour {
 
 	protected override void OnDestroy() {
 		base.OnDestroy();
+		
 		if(GameManager.Instance != null) {
 			GameManager.State.RemoveListener(OnChangeGameState);
 		}
@@ -39,12 +37,8 @@ public class Title : UIBehaviour {
 
 	protected override void Start() {
 		base.Start();
+
 		OnChangeGameState(GameManager.State.Value);
 		GameManager.State.AddListener(OnChangeGameState);
-	}
-
-	protected override void Awake() {
-		base.Awake();
-		thisText = base.GetComponent<Text>();
 	}
 }

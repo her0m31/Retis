@@ -3,8 +3,6 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class BallController : MonoBehaviour {
-	private Transform thisTransform;
-	private GameObject thisGameObject;
 	private Rigidbody2D physicsBall;
 	private Vector2 inDirection;
 	private GameObject outEffect;
@@ -12,24 +10,30 @@ public class BallController : MonoBehaviour {
 	private Vector2 worldPointMax;
 	private Vector2 worldPointMin;
 
+	private Transform thisTransform;
 	public new Transform transform {
-		get {
-			return thisTransform == null ? thisTransform = base.transform : thisTransform;
-		}
+		get {return thisTransform == null ? thisTransform = base.transform : thisTransform;}
 	}
 
+	private GameObject thisGameObject;
 	public new GameObject gameObject {
-		get {
-			return thisGameObject == null ? thisGameObject = base.gameObject : thisGameObject;
-		}
+		get {return thisGameObject == null ? thisGameObject = base.gameObject : thisGameObject;}
 	}
 
 	private Vector2 AddFirstForce() {
 		Vector2[] firstForce = new Vector2[] {
-				new Vector2(-1.50f, -1.40f)*2.65f,
-				new Vector2(-1.50f,  1.40f)*2.65f,
-				new Vector2( 1.50f, -1.40f)*2.65f,
-				new Vector2( 1.50f,  1.40f)*2.65f,
+			new Vector2(-1.50f, -1.40f)*3.0f,
+			new Vector2(-1.50f,  1.40f)*3.0f,
+			new Vector2( 1.50f, -1.40f)*3.0f,
+			new Vector2( 1.50f,  1.40f)*3.0f,
+			new Vector2(-1.70f, -1.20f)*3.0f,
+			new Vector2(-1.70f, -1.20f)*3.0f,
+			new Vector2(-1.70f,  1.20f)*3.0f,
+			new Vector2(-1.70f,  1.20f)*3.0f,
+			new Vector2( 1.40f, -1.50f)*3.0f,
+			new Vector2( 1.40f, -1.50f)*3.0f,
+			new Vector2( 1.40f,  1.50f)*3.0f,
+			new Vector2( 1.40f,  1.50f)*3.0f,
 		};
 
 		return firstForce[Random.Range(0, firstForce.Length)];
@@ -98,6 +102,12 @@ public class BallController : MonoBehaviour {
 				Destroy(gameObject);
 				ChangeStateFromPlaying();
 			}
+		}
+	}
+
+	void OnDestroy() {
+		if(GameManager.Instance != null) {
+			GameManager.State.RemoveListener(OnChangeGameState);
 		}
 	}
 

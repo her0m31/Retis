@@ -26,6 +26,9 @@ public class RacketsController : MonoBehaviour {
 			case GameManager.GameState.Playing:
 			this.enabled = true;
 			break;
+			case GameManager.GameState.Title:
+			this.enabled = true;
+			break;
 			default:
 			this.enabled = false;
 			break;
@@ -55,12 +58,12 @@ public class RacketsController : MonoBehaviour {
 			// オブジェクトの座標に、(クリックの終点から開始点を引いた値 / 20.0f)をプラス。
 			// 20.0fは、ラケットの移動速度を調整するため.値を大きくすると遅く。小さくすると早くなる。
 			if(gameObject.name == "TBRackets") {
-				float x = transform.position.x + (clickEndPoint.x - clickStartPoint.x) / 20.0f;
+				float x = transform.position.x + (clickEndPoint.x - clickStartPoint.x) / 15.0f;
 				x = Mathf.Clamp(x, worldPointMin.x, worldPointMax.x);
 				transform.position = new Vector2(x, transform.position.y);
 			}
 			else {
-				float y = transform.position.y + (clickEndPoint.y - clickStartPoint.y) / 20.0f;
+				float y = transform.position.y + (clickEndPoint.y - clickStartPoint.y) / 10.0f;
 				y = Mathf.Clamp(y, worldPointMin.y, worldPointMax.y);
 				transform.position = new Vector2(transform.position.x, y);
 			}

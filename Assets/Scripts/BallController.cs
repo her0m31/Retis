@@ -22,18 +22,18 @@ public class BallController : MonoBehaviour {
 
 	private Vector2 AddFirstForce() {
 		Vector2[] firstForce = new Vector2[] {
-			new Vector2(-1.50f, -1.40f)*3.0f,
-			new Vector2(-1.50f,  1.40f)*3.0f,
-			new Vector2( 1.50f, -1.40f)*3.0f,
-			new Vector2( 1.50f,  1.40f)*3.0f,
-			new Vector2(-1.70f, -1.20f)*3.0f,
-			new Vector2(-1.70f, -1.20f)*3.0f,
-			new Vector2(-1.70f,  1.20f)*3.0f,
-			new Vector2(-1.70f,  1.20f)*3.0f,
-			new Vector2( 1.40f, -1.50f)*3.0f,
-			new Vector2( 1.40f, -1.50f)*3.0f,
-			new Vector2( 1.40f,  1.50f)*3.0f,
-			new Vector2( 1.40f,  1.50f)*3.0f,
+			new Vector2(-1.50f, -1.40f)*2.25f,
+			new Vector2(-1.50f,  1.40f)*2.25f,
+			new Vector2( 1.50f, -1.40f)*2.25f,
+			new Vector2( 1.50f,  1.40f)*2.25f,
+			new Vector2(-1.70f, -1.20f)*2.25f,
+			new Vector2(-1.70f, -1.20f)*2.25f,
+			new Vector2(-1.70f,  1.20f)*2.25f,
+			new Vector2(-1.70f,  1.20f)*2.25f,
+			new Vector2( 1.40f, -1.50f)*2.25f,
+			new Vector2( 1.40f, -1.50f)*2.25f,
+			new Vector2( 1.40f,  1.50f)*2.25f,
+			new Vector2( 1.40f,  1.50f)*2.25f,
 		};
 
 		return firstForce[Random.Range(0, firstForce.Length)];

@@ -4,6 +4,9 @@ using	UnityEngine.EventSystems;
 using System.Collections;
 
 public class Title : UIBehaviour {
+	private AudioSource countdownSound;
+	private AudioSource playingBgm;
+
 	private Color red;
 	private Color blue;
 
@@ -23,6 +26,7 @@ public class Title : UIBehaviour {
 		text.color = red;
 		string[] count = new string[] {"3", "2", "1"};
 		for(int i = 0; i < 3; i++) {
+			countdownSound.PlayOneShot(countdownSound.clip);
 			text.text = count[i];
 			text.fontSize = 0;
 			StartCoroutine(CountdownFontSize());
@@ -55,9 +59,14 @@ public class Title : UIBehaviour {
 			StartCoroutine(CountdownCoroutine());
 			break;
 			case GameManager.GameState.GameOver:
+			playingBgm.Stop();
 			text.text = EndWord();
 			text.fontSize = 45;
 			text.enabled  = true;
+			break;
+			case GameManager.GameState.Playing:
+			text.enabled = false;
+			playingBgm.PlayOneShot(playingBgm.clip);
 			break;
 			default:
 			text.enabled = false;
@@ -83,5 +92,9 @@ public class Title : UIBehaviour {
 	protected override void Awake() {
 		red  = new Color32(231, 76, 60, 200);
 		blue = new Color32(52, 73, 94, 255);
+
+		AudioSource[] audioSources = GetComponents<AudioSource>();
+		countdownSound = audioSources[0];
+		playingBgm = audioSources[1];
 	}
 }

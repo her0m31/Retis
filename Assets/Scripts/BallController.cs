@@ -10,6 +10,8 @@ public class BallController : MonoBehaviour {
 	private Vector2 worldPointMax;
 	private Vector2 worldPointMin;
 
+	private AudioSource hitSound;
+
 	private Transform thisTransform;
 	public new Transform transform {
 		get {return thisTransform == null ? thisTransform = base.transform : thisTransform;}
@@ -42,6 +44,9 @@ public class BallController : MonoBehaviour {
 	void EffectActive(Vector3 position, bool isHit) {
 		if(isHit) {
 			GameObject.Instantiate(hitEffect, position, Quaternion.identity);
+			if(GameManager.IsPlay()) {
+				hitSound.PlayOneShot(hitSound.clip);				
+			}
 		}
 		else {
 			GameObject.Instantiate(outEffect, position, Quaternion.identity);
@@ -60,7 +65,7 @@ public class BallController : MonoBehaviour {
 	void OnChangeGameState(GameManager.GameState state) {
 		switch(state) {
 			case GameManager.GameState.Title:
-				this.enabled = true;
+				this.enabled = false;
 				break;
 			case GameManager.GameState.GameOver:
 				this.enabled = false;
@@ -129,5 +134,7 @@ public class BallController : MonoBehaviour {
 		physicsBall = gameObject.GetComponent<Rigidbody2D>();
 		physicsBall.velocity = AddFirstForce();
 		inDirection = physicsBall.velocity;
+
+		hitSound = GetComponent<AudioSource>();
 	}
 }

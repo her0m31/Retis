@@ -22,6 +22,24 @@ public class BallController : MonoBehaviour {
 		get {return thisGameObject == null ? thisGameObject = base.gameObject : thisGameObject;}
 	}
 
+	IEnumerator ResetTrail() {
+		TrailRenderer trail = gameObject.GetComponent<TrailRenderer>();
+		var trailTime = trail.time;
+		trail.time = 0;
+		yield return 0;
+		trail.time = trailTime;
+	}
+
+	private void Reset() {
+		this.StartCoroutine(ResetTrail());
+
+		physicsBall.velocity = Vector2.zero;
+		transform.position = Vector2.zero;
+
+		physicsBall.velocity = AddFirstForce();
+		inDirection = physicsBall.velocity;
+	}
+
 	private Vector2 AddFirstForce() {
 		Vector2[] firstForce = new Vector2[] {
 			new Vector2(-1.50f, -1.40f)*2.25f,
@@ -45,7 +63,7 @@ public class BallController : MonoBehaviour {
 		if(isHit) {
 			GameObject.Instantiate(hitEffect, position, Quaternion.identity);
 			if(GameManager.IsPlay()) {
-				hitSound.PlayOneShot(hitSound.clip);				
+				hitSound.PlayOneShot(hitSound.clip);
 			}
 		}
 		else {
@@ -67,11 +85,15 @@ public class BallController : MonoBehaviour {
 			case GameManager.GameState.Title:
 				this.enabled = false;
 				break;
-			case GameManager.GameState.GameOver:
+			case GameManager.GameState.Ready:
 				this.enabled = false;
+				Reset();
 				break;
 			case GameManager.GameState.Playing:
 				this.enabled = true;
+				break;
+			case GameManager.GameState.GameOver:
+				this.enabled = false;
 				break;
 		}
 	}

@@ -22,6 +22,11 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 		return State.Value == GameState.Playing ? true : false;
 	}
 
+	IEnumerator Restart() {
+		yield return new WaitForSeconds(0.10f);
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+	}
+
 	void OnChangeGameState(GameManager.GameState state) {
 		switch(state) {
 			case GameManager.GameState.Restart:

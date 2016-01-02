@@ -17,7 +17,7 @@ public class RacketsController : MonoBehaviour {
 		get {return thisGameObject == null ? thisGameObject = base.gameObject : thisGameObject;}
 	}
 
-	public new Camera camera {
+	public Camera camera {
 		get {return thisCamera == null ? thisCamera = Camera.main : thisCamera;}
 	}
 

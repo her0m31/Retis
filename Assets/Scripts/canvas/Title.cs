@@ -38,9 +38,8 @@ public class Title : UIBehaviour {
 	private string EndWord() {
 		string[] EndWords = new string[] {
 			"   GameOver...",
-			"Oops!",
+			"Oops!!",
 			"Hmm....",
-			"Cheer up!",
 		};
 
 		return EndWords[Random.Range(0, EndWords.Length)];

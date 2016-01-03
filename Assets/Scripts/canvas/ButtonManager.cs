@@ -5,6 +5,7 @@ using System.Collections;
 
 public class ButtonManager : UIBehaviour {
 	[SerializeField] private Text buttonText;
+	[SerializeField] private Blinker blink;
 	private Button thisButton;
 	private AudioSource clickSound;
 
@@ -12,12 +13,22 @@ public class ButtonManager : UIBehaviour {
 		get {return thisButton == null ? thisButton = base.GetComponent<Button>() : thisButton;}
 	}
 
+	IEnumerator CountdownFontSize() {
+		for(int i = 0; i < 45; i++) {
+			buttonText.fontSize -= 20;
+			yield return new WaitForSeconds(0.01f);
+		}
+	}
+
 	IEnumerator Ready() {
+		blink.enabled =false;
+		StartCoroutine(CountdownFontSize());
 		yield return new WaitForSeconds(0.5f);
 		GameManager.State.Value = GameManager.GameState.Ready;
 	}
 
 	IEnumerator Restart() {
+		StartCoroutine(CountdownFontSize());
 		yield return new WaitForSeconds(0.5f);
 		GameManager.State.Value = GameManager.GameState.Restart;
 	}
@@ -25,11 +36,13 @@ public class ButtonManager : UIBehaviour {
 	void OnClick() {
 		switch(GameManager.State.Value) {
 			case GameManager.GameState.Title:
+				blink.enabled = false;
 				button.interactable = false;
 				clickSound.PlayOneShot(clickSound.clip);
 				StartCoroutine(Ready());
 				break;
 			case GameManager.GameState.GameOver:
+				blink.enabled = false;
 				button.interactable = false;
 				clickSound.PlayOneShot(clickSound.clip);
 				StartCoroutine(Restart());
@@ -40,12 +53,14 @@ public class ButtonManager : UIBehaviour {
 	void OnChangeGameState(GameManager.GameState state) {
 		switch(state) {
 			case GameManager.GameState.Title:
+				blink.enabled = true;
 				gameObject.SetActive(true);
 				button.interactable = true;
 				buttonText.text = "-";
 				buttonText.fontSize = 150;
 				break;
 			case GameManager.GameState.GameOver:
+				blink.enabled = true;
 				gameObject.SetActive(true);
 				button.interactable = true;
 				buttonText.text = "2";

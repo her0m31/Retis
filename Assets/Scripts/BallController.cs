@@ -41,19 +41,20 @@ public class BallController : MonoBehaviour {
 	}
 
 	private Vector2 AddFirstForce() {
+		float speed = 2.50f;
 		Vector2[] firstForce = new Vector2[] {
-			new Vector2(-1.50f, -1.40f)*2.25f,
-			new Vector2(-1.50f,  1.40f)*2.25f,
-			new Vector2( 1.50f, -1.40f)*2.25f,
-			new Vector2( 1.50f,  1.40f)*2.25f,
-			new Vector2(-1.70f, -1.20f)*2.25f,
-			new Vector2(-1.70f, -1.20f)*2.25f,
-			new Vector2(-1.70f,  1.20f)*2.25f,
-			new Vector2(-1.70f,  1.20f)*2.25f,
-			new Vector2( 1.40f, -1.50f)*2.25f,
-			new Vector2( 1.40f, -1.50f)*2.25f,
-			new Vector2( 1.40f,  1.50f)*2.25f,
-			new Vector2( 1.40f,  1.50f)*2.25f,
+			new Vector2(-1.50f, -1.40f)*speed,
+			new Vector2(-1.50f,  1.40f)*speed,
+			new Vector2( 1.50f, -1.40f)*speed,
+			new Vector2( 1.50f,  1.40f)*speed,
+			new Vector2(-1.70f, -1.20f)*speed,
+			new Vector2(-1.70f, -1.20f)*speed,
+			new Vector2(-1.70f,  1.20f)*speed,
+			new Vector2(-1.70f,  1.20f)*speed,
+			new Vector2( 1.40f, -1.50f)*speed,
+			new Vector2( 1.40f, -1.50f)*speed,
+			new Vector2( 1.40f,  1.50f)*speed,
+			new Vector2( 1.40f,  1.50f)*speed,
 		};
 
 		return firstForce[Random.Range(0, firstForce.Length)];

@@ -6,6 +6,7 @@ public class Blinker : MonoBehaviour {
 	private float addAlpha;
 	private float addFontSize;
 	private float prevFontSize;
+	private int baseFontSize;
 
 	private Text thisText;
 	public Text text {
@@ -25,30 +26,19 @@ public class Blinker : MonoBehaviour {
 
 		// テキストの拡大縮小処理
 		int currentFontSize = text.fontSize;
-		switch(text.text) {
-			case "-":
-				if(165 < currentFontSize || currentFontSize < 135) {
-					addFontSize *= -1;
-				}
-				prevFontSize += addFontSize;
-				break;
-			case "2":
-				if(135 <= currentFontSize) {
-					prevFontSize = 100;
-				}
-				if(115 < currentFontSize || currentFontSize < 85) {
-					addFontSize *= -1;
-				}
-				prevFontSize += addFontSize;
-				break;
+		if(baseFontSize+15 < currentFontSize || currentFontSize < baseFontSize-15) {
+			addFontSize *= -1;
 		}
+		prevFontSize += addFontSize;
 
 		text.fontSize = (int)prevFontSize;
 	}
 
 	void Awake() {
-		prevFontSize = 150.0f;
 		addFontSize  = 0.5f;
 		addAlpha     = 0.014f;
+
+		prevFontSize = text.fontSize;
+		baseFontSize = text.fontSize;
 	}
 }

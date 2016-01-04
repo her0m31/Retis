@@ -50,42 +50,10 @@ public class ButtonManager : UIBehaviour {
 		}
 	}
 
-	void OnChangeGameState(GameManager.GameState state) {
-		switch(state) {
-			case GameManager.GameState.Title:
-				blink.enabled = true;
-				gameObject.SetActive(true);
-				button.interactable = true;
-				buttonText.text = "-";
-				buttonText.fontSize = 150;
-				break;
-			case GameManager.GameState.GameOver:
-				blink.enabled = true;
-				gameObject.SetActive(true);
-				button.interactable = true;
-				buttonText.text = "2";
-				buttonText.fontSize = 100;
-				break;
-			default:
-				gameObject.SetActive(false);
-				break;
-		}
-	}
-
 	protected override void OnDestroy() {
 		base.OnDestroy();
 
-		if(GameManager.Instance != null) {
-			GameManager.State.RemoveListener(OnChangeGameState);
-		}
 		GetComponent<Button>().onClick.RemoveListener(OnClick);
-	}
-
-	protected override void Start() {
-		base.Start();
-
-		OnChangeGameState(GameManager.State.Value);
-		GameManager.State.AddListener(OnChangeGameState);
 	}
 
 	protected override void Awake() {

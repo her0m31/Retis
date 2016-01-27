@@ -62,13 +62,13 @@ public class BallController : MonoBehaviour {
 
 	void EffectActive(Vector3 position, bool isHit) {
 		if(isHit) {
-			GameObject.Instantiate(hitEffect, position, Quaternion.identity);
+			// GameObject.Instantiate(hitEffect, position, Quaternion.identity);
 			if(GameManager.IsPlay()) {
 				hitSound.PlayOneShot(hitSound.clip);
 			}
 		}
 		else {
-			GameObject.Instantiate(outEffect, position, Quaternion.identity);
+			// GameObject.Instantiate(outEffect, position, Quaternion.identity);
 		}
 	}
 

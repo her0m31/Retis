@@ -30,8 +30,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 	void OnChangeGameState(GameManager.GameState state) {
 		switch(state) {
 			case GameManager.GameState.Restart:
-				SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-				break;
+			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+			break;
 		}
 	}
 
@@ -51,5 +51,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager> {
 		}
 		score = new Nortification<int>(0);
 		state = new Nortification<GameState>(GameState.Title);
+		Score.Value = 0;
 	}
 }

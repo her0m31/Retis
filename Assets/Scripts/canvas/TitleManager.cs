@@ -8,9 +8,6 @@ public class TitleManager : MonoBehaviour {
 			case GameManager.GameState.Title:
  				gameObject.SetActive(true);
 				break;
-			case GameManager.GameState.GameOver:
-				gameObject.SetActive(true);
-				break;
 			default:
 				gameObject.SetActive(false);
 				break;
